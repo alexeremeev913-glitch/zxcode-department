@@ -67,7 +67,7 @@ header.solid{background:rgba(6,6,8,.55);backdrop-filter:blur(14px);border-color:
 .brand{font-family:Orbitron,sans-serif;font-weight:800;font-size:1rem;letter-spacing:.04em;display:flex;align-items:center;gap:.6rem;text-transform:lowercase}
 .brand svg{width:26px;height:26px;animation:spin 16s linear infinite}
 @keyframes spin{to{transform:rotate(1turn)}}
-.links{display:flex;gap:1.8rem;font-size:.86rem;color:var(--muted)}
+.links{display:flex;gap:2.3rem;font-size:1.04rem;font-weight:500;color:var(--muted)}
 .links a{position:relative;transition:color .3s}
 .links a:hover,.links a.on{color:#fff}
 .links a.on::before{content:"";position:absolute;left:-10px;top:50%;width:4px;height:4px;border-radius:50%;background:var(--cream);transform:translateY(-50%)}
@@ -81,6 +81,7 @@ header.solid{background:rgba(6,6,8,.55);backdrop-filter:blur(14px);border-color:
 .burger::before,.burger::after{content:"";position:absolute;left:12px;right:12px;height:1.5px;background:#fff;transition:transform .4s}
 .burger::before{top:16px}.burger::after{bottom:16px}
 .menu-open .burger::before{transform:translateY(4px) rotate(45deg)}.menu-open .burger::after{transform:translateY(-4px) rotate(-45deg)}
+@media(max-width:1080px){.links{gap:1.5rem;font-size:.95rem}}
 @media(max-width:900px){.links{display:none}.burger{display:block}.nav>.pill{display:none}}
 #mnav{position:fixed;inset:0;z-index:55;background:#060608;display:flex;flex-direction:column;justify-content:center;gap:.4rem;padding:90px 8vw 40px;clip-path:circle(0 at calc(100% - 4vw - 21px) 37px);visibility:hidden;transition:clip-path .7s cubic-bezier(.7,0,.2,1),visibility 0s .7s}
 .menu-open #mnav{clip-path:circle(150% at calc(100% - 4vw - 21px) 37px);visibility:visible;transition:clip-path .7s cubic-bezier(.7,0,.2,1),visibility 0s}
