@@ -867,8 +867,8 @@ function armDec(p){$$('.head h2',p).forEach(h=>decIO.observe(h))}
  })()})();
 /* --- logo zxcode: VariableProximity-style letters --- */
 (()=>{const w=$('#logoW');[...(BRAND||'studio')].forEach(c=>{const s=document.createElement('span');s.className='lw';s.textContent=c;s.dataset.c=c;w.append(s)});
- const L=$$('.lw',w);const grad=()=>{const r=w.getBoundingClientRect();L.forEach(s=>{s.style.backgroundSize=r.width+'px 100%';s.style.backgroundPosition=-(s.getBoundingClientRect().left-r.left)+'px 0'})};
- grad();document.fonts&&document.fonts.ready.then(grad);addEventListener('resize',grad);
+ const L=$$('.lw',w);const grad=()=>{const r=w.getBoundingClientRect();if(r.width<10){L.forEach(s=>{s.style.backgroundSize='';s.style.backgroundPosition=''});return}L.forEach(s=>{s.style.backgroundSize=r.width+'px 100%';s.style.backgroundPosition=-(s.getBoundingClientRect().left-r.left)+'px 0'})};
+ grad();document.fonts&&document.fonts.ready.then(grad);addEventListener('resize',grad);if(window.ResizeObserver)new ResizeObserver(grad).observe(w);
  if(FINE&&!RM)(function lp(){if(document.body.classList.contains('home')&&scrollY<innerHeight){L.forEach(s=>{const r=s.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,d=Math.hypot(mx-cx,my-cy),f=Math.max(0,1-d/320);
    s.style.transform=`translateY(${-f*18}px) scale(${1+f*.08})`;s.style.setProperty('--g',f.toFixed(3))})}requestAnimationFrame(lp)})()})();
 /* --- TextType terminal --- */
