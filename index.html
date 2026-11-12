@@ -662,11 +662,16 @@ const svSet=(el,o)=>{const b=el.querySelector('.sv-b');el.classList.toggle('open
 $$('.sv.open').forEach(el=>requestAnimationFrame(()=>svSet(el,true)));
 grid.addEventListener('click',e=>{const h=e.target.closest('.sv-h');if(!h)return;const el=h.parentElement;svSet(el,!el.classList.contains('open'))});
 addEventListener('resize',()=>$$('.sv.open').forEach(el=>svSet(el,true)));
-function jumpCat(c){const t=$('#cat-'+c);if(!t)return;lenis?lenis.scrollTo(t,{offset:-130,duration:1.3}):t.scrollIntoView({behavior:'smooth'})}
+let lockCat=null,lockT=0;
+function setTab(c){$$('.tab').forEach(x=>{const on=+x.dataset.c===c;x.classList.toggle('on',on);if(on&&tabs.scrollWidth>tabs.clientWidth)tabs.scrollTo({left:x.offsetLeft-(tabs.clientWidth-x.offsetWidth)/2,behavior:'smooth'})})}
+function curCat(){const ss=$$('.sc');if(!ss.length||!$('#p-services').classList.contains('on'))return null;const line=Math.min(innerHeight*.4,320);let c=0;ss.forEach((x,i)=>{if(x.getBoundingClientRect().top<=line)c=i});
+ if(innerHeight+scrollY>=document.documentElement.scrollHeight-4){const l=ss.length-1;if(ss[l].getBoundingClientRect().top<innerHeight*.6)c=l}return c}
+let lastCat=-1;function syncTab(){if(lockCat!=null)return;const c=curCat();if(c!=null&&c!==lastCat){lastCat=c;setTab(c)}}
+let tabRaf=0;addEventListener('scroll',()=>{if(!tabRaf)tabRaf=requestAnimationFrame(()=>{tabRaf=0;syncTab()})},{passive:true});
+function jumpCat(c){const t=$('#cat-'+c);if(!t)return;lockCat=c;lastCat=c;setTab(c);clearTimeout(lockT);const done=()=>{lockCat=null;clearTimeout(lockT)};lockT=setTimeout(done,1700);
+ lenis?lenis.scrollTo(t,{offset:-130,duration:1.3,onComplete:done}):t.scrollIntoView({behavior:'smooth'})}
 function filter(){$$('#p-services .sv.open').forEach(el=>svSet(el,true))}
 tabs.onclick=e=>{const b=e.target.closest('.tab');if(b)jumpCat(+b.dataset.c)};
-const tabIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const c=e.target.id.split('-')[1];$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.c===c))}}),{rootMargin:'-45% 0px -50% 0px'});
-$$('.sc').forEach(s=>tabIO.observe(s));
 let pendingCat=null;$$('.dir').forEach(d=>d.addEventListener('click',()=>pendingCat=+d.dataset.cat));
 
 /* brief form */
@@ -703,7 +708,7 @@ function headlineIn(p){const sp=$$('.ph .line>span, #heroH .line>span',p),hh=$('
 function show(name){const p=$('#p-'+name);$$('.page').forEach(x=>x.classList.toggle('on',x===p));document.body.classList.toggle('home',name==='home');
   $$('[data-s]').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+name));setMenu(false);
   lenis?lenis.scrollTo(0,{immediate:true}):scrollTo(0,0);arm(p);armBlur(p);armDec(p);headlineIn(p);SH.set(BG[name]||null);
-  if(name==='services'){filter();const pc=pendingCat;pendingCat=null;if(pc!=null)setTimeout(()=>jumpCat(pc),900)}cur=name}
+  if(name==='services'){filter();lastCat=-1;setTimeout(syncTab,60);const pc=pendingCat;pendingCat=null;if(pc!=null)setTimeout(()=>jumpCat(pc),900)}cur=name}
 let queued=null;
 function go(name){if(name===cur)return;if(busy){queued=name;return}if(!window.gsap||RM||cur===null){show(name);return}
   busy=true;const w=$('#wipe'),w0=$('#wipe0'),t=$('#wipeT');t.textContent=$('#p-'+name).dataset.title;
