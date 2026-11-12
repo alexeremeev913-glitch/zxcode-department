@@ -333,7 +333,7 @@ footer nav{display:flex;gap:1.2rem;flex-wrap:wrap}footer a:hover{color:#fff}
 .sc-list{display:grid;gap:.8rem}
 .sv{border:1px solid var(--line);border-radius:18px;background:rgba(14,13,19,.72);backdrop-filter:blur(12px);transition:border-color .4s,background .4s}
 .sv:hover{border-color:var(--line2)}.sv.open{border-color:rgba(201,168,255,.35);background:rgba(20,17,30,.82)}
-.sv-h{width:100%;display:grid;grid-template-columns:auto 1fr auto auto;gap:1.4rem;align-items:center;text-align:left;padding:1.4rem 1.6rem}
+.sv-h{width:100%;display:grid;grid-template-columns:1fr auto auto;gap:1.4rem;align-items:center;text-align:left;padding:1.4rem 1.6rem}
 .sv-n{font-size:.8rem;color:var(--muted)}
 .sv-t b{display:block;font-size:1.12rem;font-weight:600;line-height:1.3}
 .sv-t small{display:block;color:var(--muted);font-size:.9rem;margin-top:.25rem}
@@ -651,13 +651,13 @@ const CI=[['Сайты, которые продают и выглядят дор
 ['Тексты, SEO и реклама — чтобы о вас узнали и у вас купили.','<path d="M8 54h48M14 46V34M26 46V24M38 46V30M50 46V14M12 26l12-10 12 8 16-12"/>'],
 ['Аналитика, базы данных, хостинг и сопровождение после запуска.','<ellipse cx="32" cy="14" rx="18" ry="6"/><path d="M14 14v36c0 3.3 8 6 18 6s18-2.7 18-6V14M14 26c0 3.3 8 6 18 6s18-2.7 18-6M14 38c0 3.3 8 6 18 6s18-2.7 18-6"/>']];
 const tabs=$('#tabs'),grid=$('#grid');
-tabs.innerHTML=CATS.map((c,i)=>`<button class="tab" data-c="${i}" data-link>${c.toLowerCase()}<sup>${S.filter(s=>s[0]===i).length}</sup></button>`).join('');
-let gi=0;
+tabs.innerHTML=CATS.map((c,i)=>`<button class="tab" data-c="${i}" data-link>${c.toLowerCase()}</button>`).join('');
+
 grid.innerHTML=CATS.map((c,ci)=>{const items=S.map((s,i)=>[s,i]).filter(([s])=>s[0]===ci);const min=Math.min(...items.map(([s])=>+s[4].replace(/\s/g,'')));
- return `<div class="sc" id="cat-${ci}"><aside class="sc-side reveal"><span class="idx">(<b>${String(ci+1).padStart(2,'0')}</b>) —— ${items.length} услуг</span>
+ return `<div class="sc" id="cat-${ci}"><aside class="sc-side reveal">
   <div class="sc-ico"><svg viewBox="0 0 64 64" fill="none" stroke="url(#ig)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${CI[ci][1]}</svg></div>
   <h2 class="disp">${c.toLowerCase()}</h2><p>${CI[ci][0]}</p><span class="sc-from">от <b>${min.toLocaleString('ru-RU')} ₽</b></span></aside>
-  <div class="sc-list">${items.map(([[,t,d,tags,p,term],i],k)=>`<div class="sv reveal${k===0?' open':''}"><button class="sv-h" data-link><span class="sv-n mono">${String(++gi).padStart(2,'0')}</span><span class="sv-t"><b>${t}</b><small>${d}</small></span><span class="sv-p"><small>от</small> ${p} ₽</span><span class="sv-x"></span></button>
+  <div class="sc-list">${items.map(([[,t,d,tags,p,term],i],k)=>`<div class="sv reveal${k===0?' open':''}"><button class="sv-h" data-link><span class="sv-t"><b>${t}</b><small>${d}</small></span><span class="sv-p"><small>от</small> ${p} ₽</span><span class="sv-x"></span></button>
    <div class="sv-b"><div class="sv-in"><div class="sv-ex"><span class="mono">// например</span><p>${EX[i]}</p></div><div class="sv-meta"><div class="sv-tags">${tags.map(x=>`<span>${x}</span>`).join('')}</div><div class="sv-row"><span>срок: <b>${term}</b></span><a href="#contact" class="pill mag">заказать <span class="arr">→</span></a></div></div></div></div></div>`).join('')}</div></div>`}).join('')+
  '<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="ig" x1="0" y1="0" x2="64" y2="64"><stop stop-color="#9fe8ff"/><stop offset=".5" stop-color="#c9a8ff"/><stop offset="1" stop-color="#ffb8e6"/></linearGradient></defs></svg>';
 const svSet=(el,o)=>{const b=el.querySelector('.sv-b');el.classList.toggle('open',o);b.style.height=o?b.scrollHeight+'px':0};
