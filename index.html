@@ -75,7 +75,7 @@ main,header,footer{position:relative;z-index:2}
 .lline i{position:absolute;inset:0;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));transform:scaleX(0);transform-origin:left;box-shadow:0 0 12px var(--a2)}
 @media(max-width:560px){.lc{font-size:.62rem}}
 .lstat{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted)}.lstat #lnum{color:var(--cream)}
-.wipe{position:fixed;inset:0;z-index:9000;pointer-events:none;display:grid;place-items:center;visibility:hidden;background:#0d0c11;will-change:transform}.wipe.w0{z-index:8999;background:var(--cream)}
+.wipe{position:fixed;top:-2px;left:-2px;right:-2px;height:calc(100vh + 4px);height:calc(100lvh + 4px);z-index:9000;pointer-events:none;display:grid;place-items:center;visibility:hidden;background:#0d0c11;will-change:transform}.wipe.w0{z-index:8999;background:var(--cream)}
 .wipe b{font-family:Unbounded;font-weight:800;font-size:clamp(2rem,7vw,5.5rem);letter-spacing:-.05em;text-transform:lowercase;opacity:0}
 
 /* header */
@@ -716,8 +716,8 @@ function go(name){if(name===cur)return;if(busy){queued=name;return}if(!window.gs
   gsap.timeline({onComplete:()=>{busy=false;gsap.set([w,w0],{autoAlpha:0});if(queued&&queued!==cur){const q=queued;queued=null;go(q)}else queued=null}})
    .set([w,w0],{autoAlpha:1,x:0,y:0,yPercent:100,clipPath:'ellipse(150% 100% at 50% 100%)'})
    .set(t,{autoAlpha:0,yPercent:60})
-   .to(w0,{yPercent:0,duration:.6,ease:'expo.inOut'})
-   .to(w,{yPercent:0,duration:.6,ease:'expo.inOut'},'<.08')
+   .to(w0,{yPercent:0,clipPath:'ellipse(200% 220% at 50% 100%)',duration:.6,ease:'expo.inOut'})
+   .to(w,{yPercent:0,clipPath:'ellipse(200% 220% at 50% 100%)',duration:.6,ease:'expo.inOut'},'<.08')
    .to(t,{autoAlpha:1,yPercent:0,duration:.45,ease:'power3.out'},'-=.2')
    .add(()=>{show(name);gsap.set(w0,{autoAlpha:0})})
    .to(t,{autoAlpha:0,yPercent:-60,duration:.35,ease:'power2.in'},'+=.2')
